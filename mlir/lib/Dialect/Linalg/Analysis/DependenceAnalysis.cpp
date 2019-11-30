@@ -34,27 +34,25 @@ using namespace mlir::linalg;
 using llvm::dbgs;
 
 static StringRef toStringRef(LinalgDependenceGraph::DependenceType dt) {
-  switch (dt) {
-  case LinalgDependenceGraph::DependenceType::RAW:
-    return "RAW";
+   switch (dt) {
+   case LinalgDependenceGraph::DependenceType::RAW:
+     return "RAW";
   case LinalgDependenceGraph::DependenceType::RAR:
     return "RAR";
   case LinalgDependenceGraph::DependenceType::WAR:
     return "WAR";
   case LinalgDependenceGraph::DependenceType::WAW:
     return "WAW";
-  default:
+   default:
     break;
   }
   llvm_unreachable("Unexpected DependenceType");
 }
 
 Value *Aliases::find(Value *v) {
-  if (isa<BlockArgument>(v))
-    return v;
+    if (isa<BlockArgument>(v)) return v;
 
-  auto it = aliases.find(v);
-  if (it != aliases.end()) {
+  auto it = aliases.find(v);   if (it != aliases.end()) {
     assert(((isa<BlockArgument>(it->getSecond()) &&
              it->getSecond()->getType().isa<MemRefType>()) ||
             it->getSecond()->getType().isa<BufferType>()) &&
